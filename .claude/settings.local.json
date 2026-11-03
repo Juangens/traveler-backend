@@ -1,0 +1,50 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./mvnw clean *)",
+      "Bash(psql --version)",
+      "Bash(where psql *)",
+      "Read(//c/Program Files/PostgreSQL/**)",
+      "Read(//c//**)",
+      "Bash(powershell.exe *)",
+      "Bash(\"/c/Program Files/PostgreSQL/18/bin/psql.exe\" --version)",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "Bash(npx prettier *)",
+      "Bash(node -e \"const data = JSON.parse\\(require\\('fs'\\).readFileSync\\(0, 'utf-8'\\)\\); console.log\\(data.tool_response?.filePath || data.tool_input?.file_path\\);\")",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('.claude/settings.local.json', 'utf-8'\\)\\); console.log\\('JSON válido ✓'\\)\")",
+      "Bash(./mvnw.cmd clean *)",
+      "Bash(./mvnw.cmd test *)",
+      "Bash(pg_isready)",
+      "Bash(sc query *)",
+      "Bash(reg query *)",
+      "Bash(dir \"C:\\\\Program Files\\\\PostgreSQL\")",
+      "Bash(C:\\\\Program Files\\\\PostgreSQL\\\\18\\\\bin\\\\psql.exe *)",
+      "Bash(\"C:\\\\Program Files\\\\PostgreSQL\\\\18\\\\bin\\\\psql.exe\" -U postgres -c \"SELECT datname FROM pg_database WHERE datname = 'traveler_db';\")",
+      "Bash(psql -U postgres -d traveler_db -c \"SELECT version\\(\\);\")",
+      "Bash(cmd.exe /c test-connection.bat)",
+      "Bash(PGPASSWORD=dev123 \"C:\\\\Program Files\\\\PostgreSQL\\\\18\\\\bin\\\\psql.exe\" -U traveler_user -d traveler_db -c \"SELECT version\\(\\);\")",
+      "Bash(echo \"EXIT_CODE: $?\")",
+      "Bash(PGPASSWORD=123turia \"C:\\\\Program Files\\\\PostgreSQL\\\\18\\\\bin\\\\psql.exe\" -U postgres -f setup-database.sql)",
+      "Bash(./mvnw.cmd spring-boot:run)",
+      "Bash(curl -v http://localhost:8080/h2-console)",
+      "Bash(netstat -ano)",
+      "Bash(taskkill //F //PID 17712 //PID 27572 //PID 21936 //PID 25504)",
+      "Bash(./mvnw spring-boot:run)",
+      "Bash(taskkill //F //IM java.exe)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const data = JSON.parse(require('fs').readFileSync(0, 'utf-8')); const file = data.tool_response?.filePath || data.tool_input?.file_path; if (file) { require('child_process').execSync('npx prettier --write \\\"' + file + '\\\"', {stdio: 'inherit'}); }\" 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
+}
